@@ -9,6 +9,7 @@ import Register from "../components/modal/Register";
 import Sidebar from "../components/Sidebar";
 
 function Home() {
+  document.title = `Home`;
   return (
     <>
       <Container fluid style={{ backgroundColor: "#E5E5E5" }}>

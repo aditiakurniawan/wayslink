@@ -14,6 +14,7 @@ import { Navigate, useNavigate } from "react-router";
 import { API } from "../config/api";
 
 function Link() {
+  document.title = `Create Link`;
   const navigate = useNavigate();
   const titlePage = "Create Link";
   const [message, setMessage] = useState(null);
@@ -23,9 +24,22 @@ function Link() {
     title: "",
     description: "",
     image: "",
-    titlelink: "",
-    link: "",
-    links: [],
+    titleWeb: "",
+    linkWeb: "",
+    titleFb: "",
+    linkFb: "",
+    titleIg: "",
+    linkIg: "",
+    titleTw: "",
+    linkTw: "",
+    titleYt: "",
+    linkYt: "",
+    titleWa: "",
+    linkWa: "",
+
+    // titlelink: "",
+    // link: "",
+    // links: [],
   });
 
   const addAnotherLink = (e) => {
@@ -33,7 +47,7 @@ function Link() {
 
     setForm({
       ...form,
-      links: [...form.links, { titlelink: "", link: "" }],
+      links: [...form.links, { titleWeb: "", linkWeb: "" }],
     });
   };
 
@@ -70,8 +84,20 @@ function Link() {
       formData.set("title", form?.title);
       formData.set("description", form?.description);
       formData.set("image", form?.image[0], form?.image[0]?.name);
-      formData.set("titlelink", form?.titlelink);
-      formData.set("link", form?.link);
+      // formData.set("titlelink", form?.titlelink);
+      // formData.set("link", form?.link);
+      formData.set("titleWeb", form?.titleWeb);
+      formData.set("linkWeb", form?.linkWeb);
+      formData.set("titleFb", form?.titleFb);
+      formData.set("linkFb", form?.linkFb);
+      formData.set("titleIg", form?.titleIg);
+      formData.set("linkIg", form?.linkIg);
+      formData.set("titleTw", form?.titleTw);
+      formData.set("linkTw", form?.linkTw);
+      formData.set("titleYt", form?.titleYt);
+      formData.set("linkYt", form?.linkYt);
+      formData.set("titleWa", form?.titleWa);
+      formData.set("linkWa", form?.linkWa);
       // formData.set("links", JSON.stringify(form?.links));
 
       const response = await API.post("/link", formData, config);
@@ -127,6 +153,7 @@ function Link() {
                         >
                           Publish Link
                         </Button>
+                        {message && message}
                       </Col>
                     </Row>
                     <Row className="mt-5">
@@ -145,7 +172,7 @@ function Link() {
                             style={{ display: "flex", alignItems: "center" }}
                           >
                             <Col md={3}>
-                              <img src={upload} alt="" />
+                              <img src={preview} alt="" className="w-100" />
                             </Col>
                             <Col>
                               <Form.Group>
@@ -213,7 +240,7 @@ function Link() {
                                     <Form.Control
                                       placeholder="ex. Your Title Link"
                                       type="text"
-                                      name="titlelink"
+                                      name="titleWeb"
                                       onChange={handleChange}
                                       style={{
                                         border: "0px white",
@@ -228,7 +255,7 @@ function Link() {
                                     <Form.Control
                                       placeholder="ex. Link Here"
                                       type="text"
-                                      name="link"
+                                      name="linkWeb"
                                       onChange={handleChange}
                                       style={{
                                         border: "0px white",
@@ -253,7 +280,7 @@ function Link() {
                                     <Form.Control
                                       placeholder="Input Facebook Account"
                                       type="text"
-                                      name="titlelink"
+                                      name="titleFb"
                                       onChange={handleChange}
                                       style={{
                                         border: "0px white",
@@ -268,7 +295,7 @@ function Link() {
                                     <Form.Control
                                       placeholder="Input Link Facebook Here"
                                       type="text"
-                                      name="link"
+                                      name="linkFb"
                                       onChange={handleChange}
                                       style={{
                                         border: "0px white",
@@ -293,7 +320,7 @@ function Link() {
                                     <Form.Control
                                       placeholder="Input Instagram Account"
                                       type="text"
-                                      name="titlelink"
+                                      name="titleIg"
                                       onChange={handleChange}
                                       style={{
                                         border: "0px white",
@@ -308,7 +335,7 @@ function Link() {
                                     <Form.Control
                                       placeholder="Input Link Instagram"
                                       type="text"
-                                      name="link"
+                                      name="linkIg"
                                       onChange={handleChange}
                                       style={{
                                         border: "0px white",
@@ -333,7 +360,7 @@ function Link() {
                                     <Form.Control
                                       placeholder="Input Twitter Account"
                                       type="text"
-                                      name="titlelink"
+                                      name="titleTw"
                                       onChange={handleChange}
                                       style={{
                                         border: "0px white",
@@ -348,7 +375,7 @@ function Link() {
                                     <Form.Control
                                       placeholder="Input Link Twitter"
                                       type="text"
-                                      name="link"
+                                      name="linkTw"
                                       onChange={handleChange}
                                       style={{
                                         border: "0px white",
@@ -373,7 +400,7 @@ function Link() {
                                     <Form.Control
                                       placeholder="Input Youtube Channel"
                                       type="text"
-                                      name="titlelink"
+                                      name="titleYt"
                                       onChange={handleChange}
                                       style={{
                                         border: "0px white",
@@ -388,7 +415,7 @@ function Link() {
                                     <Form.Control
                                       placeholder="Input Link Youtube"
                                       type="text"
-                                      name="link"
+                                      name="linkYt"
                                       onChange={handleChange}
                                       style={{
                                         border: "0px white",
@@ -413,7 +440,7 @@ function Link() {
                                     <Form.Control
                                       placeholder="Input Whatsapp Number"
                                       type="text"
-                                      name="titlelink"
+                                      name="titleWa"
                                       onChange={handleChange}
                                       style={{
                                         border: "0px white",
@@ -428,7 +455,7 @@ function Link() {
                                     <Form.Control
                                       placeholder="Input Link Here"
                                       type="text"
-                                      name="link"
+                                      name="linkWa"
                                       onChange={handleChange}
                                       style={{
                                         border: "0px white",

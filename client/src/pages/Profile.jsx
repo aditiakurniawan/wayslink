@@ -105,11 +105,10 @@ function Profile() {
                   <p>Name</p>
                   <Form.Group className="mb-3 border-bottom border-dark">
                     <Form.Control
-                      placeholder="Full Name"
+                      placeholder={state?.user?.name}
                       type="text"
                       name="email"
                       style={{ border: "0px white" }}
-                      value={state?.user?.name}
                       onChange={handleChange}
                     />
                   </Form.Group>
@@ -117,11 +116,10 @@ function Profile() {
                   <p>Email</p>
                   <Form.Group className="mb-3 border-bottom border-dark">
                     <Form.Control
-                      placeholder="Email@mail.com"
+                      placeholder={state?.user?.email}
                       type="text"
                       name="email"
                       style={{ border: "0px white" }}
-                      value={state?.user?.email}
                       onChange={handleChange}
                     />
                   </Form.Group>
