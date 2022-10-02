@@ -3,6 +3,11 @@ import Sidebar from "../components/Sidebar";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import phone1 from "../assets/images/phone1.png";
 import upload from "../assets/images/upload.png";
+import fb from "../assets/icon/fb.png";
+import ig from "../assets/icon/ig.png";
+import tw from "../assets/icon/tw.png";
+import wa from "../assets/icon/wa.png";
+import yt from "../assets/icon/yt.png";
 import { useState, useEffect } from "react";
 import { useMutation } from "react-query";
 import { Navigate, useNavigate } from "react-router";
@@ -43,10 +48,11 @@ function Link() {
         e.target.type === "file" ? e.target.files : e.target.value,
     });
 
-    // if (e.target.type === "file") {
-    //   let url = URL.createObjectURL(e.target.files[0]);
-    //   setPreview(url);
-    // }
+    if (e.target.type === "file") {
+      let url = URL.createObjectURL(e.target.files[0]);
+      setPreview(url);
+    }
+    console.log(form);
   };
 
   const handleSubmit = useMutation(async (e) => {
@@ -56,7 +62,7 @@ function Link() {
       const config = {
         headers: {
           "Content-type": "multipart/form-data",
-          Authozation: `Bearer ${localStorage.token}`,
+          Authorization: `Bearer ${localStorage.token}`,
         },
       };
 
@@ -71,43 +77,8 @@ function Link() {
       const response = await API.post("/link", formData, config);
 
       console.log(response);
-      console.log(form);
-      navigate("/link");
-
-      // setForm({
-      //   title: "",
-      //   description: "",
-      //   image: "",
-      //   titlelink: "",
-      //   link: "",
-      //   links: [],
-      // });
-
-      // setPreview(null);
-
-      // if (response.data.status === "success") {
-      //   const alert = (
-      //     <Alert
-      //       variant="success"
-      //       className="py-1 d-flex justify-content-center"
-      //     >
-      //       Add Link Success
-      //     </Alert>
-      //   );
-      //   setMessage(alert);
-
-      //   new FormData();
-      // } else {
-      //   const alert = (
-      //     <Alert
-      //       variant="danger"
-      //       className="py-1 d-flex justify-content-center"
-      //     >
-      //       Add Link Failed
-      //     </Alert>
-      //   );
-      //   setMessage(alert);
-      // }
+      console.log("ini form", form);
+      navigate("/datalink");
     } catch (error) {
       const alert = (
         <Alert variant="danger" className="py-1">
@@ -121,7 +92,7 @@ function Link() {
 
   useEffect(() => {
     console.log(form);
-  }, [form.images]);
+  }, [form.image]);
 
   return (
     <>
@@ -199,21 +170,10 @@ function Link() {
                                   hidden
                                 />
                               </Form.Group>
-                              {/* <Button
-                                type="file"
-                                onChange={handleChange}
-                                className="mx-3 my-auto"
-                                style={{
-                                  backgroundColor: "#FF9F00",
-                                  border: "none",
-                                }}
-                              >
-                                Upload
-                              </Button> */}
                             </Col>
                           </Row>
                           <div className="my-5">
-                            <p>Title</p>
+                            <p className="text-dark">Title</p>
                             <Form.Group className="mb-3 border-bottom border-dark">
                               <Form.Control
                                 placeholder="ex. Your Title"
@@ -225,7 +185,7 @@ function Link() {
                               />
                             </Form.Group>
 
-                            <p>Description</p>
+                            <p className="text-dark">Description</p>
                             <Form.Group className="mb-3 border-bottom border-dark">
                               <Form.Control
                                 placeholder="ex. Description Here"
@@ -246,7 +206,9 @@ function Link() {
                               </Col>
                               <Col>
                                 <div>
-                                  <p>Title Link</p>
+                                  <p className="text-dark">
+                                    Title Link website
+                                  </p>
                                   <Form.Group className="mb-3 border-bottom border-dark">
                                     <Form.Control
                                       placeholder="ex. Your Title Link"
@@ -261,7 +223,7 @@ function Link() {
                                     />
                                   </Form.Group>
 
-                                  <p>Link</p>
+                                  <p className="text-dark">Link</p>
                                   <Form.Group className="mb-3 border-bottom border-dark">
                                     <Form.Control
                                       placeholder="ex. Link Here"
@@ -277,9 +239,210 @@ function Link() {
                                 </div>
                               </Col>
                             </Row>
+                            <Row
+                              className="p-3"
+                              style={{ backgroundColor: "#ECECEC" }}
+                            >
+                              <Col sm={3}>
+                                <img src={fb} alt="" className="w-100" />
+                              </Col>
+                              <Col>
+                                <div>
+                                  <p className="text-dark">Facebook</p>
+                                  <Form.Group className="mb-3 border-bottom border-dark">
+                                    <Form.Control
+                                      placeholder="Input Facebook Account"
+                                      type="text"
+                                      name="titlelink"
+                                      onChange={handleChange}
+                                      style={{
+                                        border: "0px white",
+                                        backgroundColor: "#ECECEC",
+                                      }}
+                                      // value="adit"
+                                    />
+                                  </Form.Group>
+
+                                  <p className="text-dark">Link Facebook </p>
+                                  <Form.Group className="mb-3 border-bottom border-dark">
+                                    <Form.Control
+                                      placeholder="Input Link Facebook Here"
+                                      type="text"
+                                      name="link"
+                                      onChange={handleChange}
+                                      style={{
+                                        border: "0px white",
+                                        backgroundColor: "#ECECEC",
+                                      }}
+                                    />
+                                  </Form.Group>
+                                </div>
+                              </Col>
+                            </Row>
+                            <Row
+                              className="p-3"
+                              style={{ backgroundColor: "#ECECEC" }}
+                            >
+                              <Col sm={3}>
+                                <img src={ig} alt="" className="w-100" />
+                              </Col>
+                              <Col>
+                                <div>
+                                  <p className="text-dark">Instagram</p>
+                                  <Form.Group className="mb-3 border-bottom border-dark">
+                                    <Form.Control
+                                      placeholder="Input Instagram Account"
+                                      type="text"
+                                      name="titlelink"
+                                      onChange={handleChange}
+                                      style={{
+                                        border: "0px white",
+                                        backgroundColor: "#ECECEC",
+                                      }}
+                                      // value="adit"
+                                    />
+                                  </Form.Group>
+
+                                  <p className="text-dark">Instagram Link</p>
+                                  <Form.Group className="mb-3 border-bottom border-dark">
+                                    <Form.Control
+                                      placeholder="Input Link Instagram"
+                                      type="text"
+                                      name="link"
+                                      onChange={handleChange}
+                                      style={{
+                                        border: "0px white",
+                                        backgroundColor: "#ECECEC",
+                                      }}
+                                    />
+                                  </Form.Group>
+                                </div>
+                              </Col>
+                            </Row>
+                            <Row
+                              className="p-3"
+                              style={{ backgroundColor: "#ECECEC" }}
+                            >
+                              <Col sm={3}>
+                                <img src={tw} alt="" className="w-100" />
+                              </Col>
+                              <Col>
+                                <div>
+                                  <p className="text-dark">Twitter</p>
+                                  <Form.Group className="mb-3 border-bottom border-dark">
+                                    <Form.Control
+                                      placeholder="Input Twitter Account"
+                                      type="text"
+                                      name="titlelink"
+                                      onChange={handleChange}
+                                      style={{
+                                        border: "0px white",
+                                        backgroundColor: "#ECECEC",
+                                      }}
+                                      // value="adit"
+                                    />
+                                  </Form.Group>
+
+                                  <p className="text-dark">Link Twitter</p>
+                                  <Form.Group className="mb-3 border-bottom border-dark">
+                                    <Form.Control
+                                      placeholder="Input Link Twitter"
+                                      type="text"
+                                      name="link"
+                                      onChange={handleChange}
+                                      style={{
+                                        border: "0px white",
+                                        backgroundColor: "#ECECEC",
+                                      }}
+                                    />
+                                  </Form.Group>
+                                </div>
+                              </Col>
+                            </Row>
+                            <Row
+                              className="p-3"
+                              style={{ backgroundColor: "#ECECEC" }}
+                            >
+                              <Col sm={3}>
+                                <img src={yt} alt="" className="w-100" />
+                              </Col>
+                              <Col>
+                                <div>
+                                  <p className="text-dark">Youtube</p>
+                                  <Form.Group className="mb-3 border-bottom border-dark">
+                                    <Form.Control
+                                      placeholder="Input Youtube Channel"
+                                      type="text"
+                                      name="titlelink"
+                                      onChange={handleChange}
+                                      style={{
+                                        border: "0px white",
+                                        backgroundColor: "#ECECEC",
+                                      }}
+                                      // value="adit"
+                                    />
+                                  </Form.Group>
+
+                                  <p className="text-dark">Link Youtube</p>
+                                  <Form.Group className="mb-3 border-bottom border-dark">
+                                    <Form.Control
+                                      placeholder="Input Link Youtube"
+                                      type="text"
+                                      name="link"
+                                      onChange={handleChange}
+                                      style={{
+                                        border: "0px white",
+                                        backgroundColor: "#ECECEC",
+                                      }}
+                                    />
+                                  </Form.Group>
+                                </div>
+                              </Col>
+                            </Row>
+                            <Row
+                              className="p-3"
+                              style={{ backgroundColor: "#ECECEC" }}
+                            >
+                              <Col sm={3}>
+                                <img src={wa} alt="" className="w-100" />
+                              </Col>
+                              <Col>
+                                <div>
+                                  <p className="text-dark">Whatsapp</p>
+                                  <Form.Group className="mb-3 border-bottom border-dark">
+                                    <Form.Control
+                                      placeholder="Input Whatsapp Number"
+                                      type="text"
+                                      name="titlelink"
+                                      onChange={handleChange}
+                                      style={{
+                                        border: "0px white",
+                                        backgroundColor: "#ECECEC",
+                                      }}
+                                      // value="adit"
+                                    />
+                                  </Form.Group>
+
+                                  <p className="text-dark">Link Whatsapp</p>
+                                  <Form.Group className="mb-3 border-bottom border-dark">
+                                    <Form.Control
+                                      placeholder="Input Link Here"
+                                      type="text"
+                                      name="link"
+                                      onChange={handleChange}
+                                      style={{
+                                        border: "0px white",
+                                        backgroundColor: "#ECECEC",
+                                      }}
+                                    />
+                                  </Form.Group>
+                                </div>
+                              </Col>
+                            </Row>
                             <Row>
                               <Button
                                 className="w-100 my-5"
+                                type="submit"
                                 style={{
                                   backgroundColor: "#FF9F00",
                                   border: "none",
