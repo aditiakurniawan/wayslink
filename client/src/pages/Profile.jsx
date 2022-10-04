@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { useNavigate, Link } from "react-router-dom";
 import { useQuery } from "react-query";
+import { useMutation } from "react-query";
 import { API } from "../config/api";
 import Delete from "../components/modal/Delete";
 
@@ -14,22 +15,24 @@ function Profile() {
   const [state, dispatch] = useContext(UserContext);
   const [userData, setUserData] = useState([]);
   const navigate = useNavigate();
-  let id = state.user.id;
+  let id = state?.user?.id;
   const [user, setUser] = useState({});
   const [message, setMessage] = useState(null);
   const [form, setForm] = useState({
-    fullName: "",
+    name: "",
+    email: "",
   });
-  const { fullName } = form;
+  const { name, email } = form;
 
   const handleChange = (e) => {
-    setUser({
-      ...user,
+    setForm({
+      ...form,
       [e.target.name]: e.target.value,
     });
+    console.log(form);
   };
 
-  const handleOnSubmit = async (e) => {
+  const handleSubmit = useMutation(async (e) => {
     try {
       e.preventDefault();
 
@@ -41,13 +44,13 @@ function Profile() {
       };
 
       // Data body
-      const body = JSON.stringify(user);
+      const body = JSON.stringify(form);
 
-      const response = await API.patch("/user/{id}", body, config);
+      const response = await API.patch("/user/" + id, body, config);
 
-      console.log(user);
+      console.log(response);
 
-      if (response.data.status === "success") {
+      if (response?.status === 200) {
         const alert = (
           <Alert
             variant="success"
@@ -71,19 +74,11 @@ function Profile() {
     } catch (error) {
       console.log(error);
     }
-  };
+  });
 
-  function getUserData() {
-    if (!state.isLogin) {
-      navigate("/");
-      Error({ message: "Silahkan login terlebih dahulu!" });
-    }
-    console.log(state);
-  }
-
-  useEffect(() => {
-    getUserData();
-  }, []);
+  // useEffect(() => {
+  //   handleSubmit();
+  // }, []);
 
   return (
     <>
@@ -96,8 +91,8 @@ function Profile() {
             className="pt-5"
           >
             <Container className="w-100 px-5 py-3">
-              <h3>My Informasi</h3>
-              <Form onSubmit={(e) => handleOnSubmit.mutate(e)}>
+              <Form onSubmit={(e) => handleSubmit.mutate(e)}>
+                <h3>My Informasi</h3>
                 <div
                   className="bg-white my-5 p-4"
                   style={{ borderRadius: "10px" }}
@@ -107,7 +102,7 @@ function Profile() {
                     <Form.Control
                       placeholder={state?.user?.name}
                       type="text"
-                      name="email"
+                      name="name"
                       style={{ border: "0px white" }}
                       onChange={handleChange}
                     />
@@ -131,6 +126,9 @@ function Profile() {
                       md={3}
                       className="mx-3 "
                       type="submit"
+                      onClick={(e) => {
+                        handleSubmit.mutate(e);
+                      }}
                       style={{ backgroundColor: "#FF9F00", border: "none" }}
                     >
                       Save Account

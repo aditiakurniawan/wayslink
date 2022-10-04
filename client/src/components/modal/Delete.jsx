@@ -1,24 +1,21 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
+import React from "react";
+import { Row, Col, Button, Modal } from "react-bootstrap";
 
-function Delete({ setConfirmDelete }) {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+function Delete({ handleClose, setConfirmDelete, show, setShow }) {
   const handleDelete = () => {
     setConfirmDelete(true);
   };
   return (
     <>
-      <Button
+      {/* <Button
         variant="primary"
         onClick={handleShow}
         style={{ backgroundColor: "#FF0000", border: "none" }}
       >
         Delete Account
-      </Button>
+      </Button> */}
 
-      <Modal show={show} onHide={handleClose} animation={false}>
+      <Modal show={show} onHide={() => setShow(false)} animation={false}>
         <Modal.Body className="px-5 ">
           <p style={{ color: "#469F74" }}>
             you are sure you want to remove this link

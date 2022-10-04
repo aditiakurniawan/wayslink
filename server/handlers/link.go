@@ -95,12 +95,48 @@ func (h *handlerLink) UpdateLink(w http.ResponseWriter, r *http.Request) {
 	if request.Image != "" {
 		link.Image = request.Image
 	}
-	if request.Description != "" {
-		link.Description = request.Description
+	if request.TitleWeb != "" {
+		link.TitleWeb = request.TitleWeb
 	}
-	// if request.TitleLink != "" {
-	// 	link.TitleLink = request.TitleLink
-	// }
+
+	if request.LinkWeb != "" {
+		link.LinkWeb = request.LinkWeb
+	}
+	if request.TitleFb != "" {
+		link.TitleFb = request.TitleFb
+	}
+
+	if request.LinkFb != "" {
+		link.LinkFb = request.LinkFb
+	}
+	if request.TitleIg != "" {
+		link.TitleIg = request.TitleIg
+	}
+
+	if request.LinkIg != "" {
+		link.LinkIg = request.LinkIg
+	}
+	if request.TitleTw != "" {
+		link.TitleTw = request.TitleTw
+	}
+
+	if request.LinkTw != "" {
+		link.LinkTw = request.LinkTw
+	}
+	if request.TitleYt != "" {
+		link.TitleYt = request.TitleYt
+	}
+
+	if request.LinkYt != "" {
+		link.LinkYt = request.LinkYt
+	}
+	if request.TitleWa != "" {
+		link.TitleWa = request.TitleWa
+	}
+
+	if request.LinkWa != "" {
+		link.LinkWa = request.LinkWa
+	}
 
 	data, err := h.LinkRepository.UpdateLink(link)
 	if err != nil {

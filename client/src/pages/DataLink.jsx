@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import example from "../assets/images/example.png";
+// import example from "../assets/images/example.png";
 import view from "../assets/icon/View.png";
 import edit from "../assets/icon/Edit.png";
 import delet from "../assets/icon/Delete.png";
@@ -9,20 +9,32 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { useQuery } from "react-query";
+import { useMutation } from "react-query";
 import { API } from "../config/api";
+import Delete from "../components/modal/Delete";
 
 function DataLink() {
   document.title = `My Link`;
   const state = useContext(UserContext);
+  // const [userLinks, setUserLinks] = useState([]);
+
+  const [dataFilter, setDataFilter] = useState([]);
+
+  const [idDelete, setIdDelete] = useState(null);
+  const [confirmDelete, setConfirmDelete] = useState(null);
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   console.log("state", state);
+  let count = state.length;
   let { data: links } = useQuery("linkCache", async () => {
     const response = await API.get("/links");
     console.log("ini response", response);
     return response.data.data;
   });
   console.log("ini", links);
-
-  const [dataFilter, setDataFilter] = useState([]);
 
   function handleChangeLink(e) {
     if (!e.target.value) {
@@ -38,6 +50,30 @@ function DataLink() {
   useEffect(() => {
     if (links) setDataFilter(links);
   }, [links]);
+
+  const handleDelete = (id) => {
+    setIdDelete(id);
+    handleShow();
+  };
+
+  const deleteById = useMutation(async (id) => {
+    try {
+      await API.delete(`/link/${id}`);
+      links();
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  useEffect(() => {
+    if (confirmDelete) {
+      // Close modal confirm delete data
+      handleClose();
+      // execute delete data by id function
+      deleteById(idDelete);
+      setConfirmDelete(null);
+    }
+  }, [confirmDelete]);
 
   return (
     <>
@@ -65,7 +101,7 @@ function DataLink() {
                       marginTop: "6px",
                     }}
                   >
-                    1
+                    {count}
                   </h6>
                 </Col>
                 <Col sm={9}>
@@ -140,17 +176,36 @@ function DataLink() {
                         </Link>
                       </Col>
                       <Col sm={1}>
-                        <Link to={`/create_link`}>
+                        <Link to={`/Update_link/${item.id}`}>
                           <img src={edit} alt="" />
                         </Link>
                       </Col>
                       <Col sm={1}>
-                        <img src={delet} alt="" />{" "}
+                        <Button
+                          onClick={
+                            () => handleDelete(item.id)
+                            // setShow(true)
+                          }
+                          style={{
+                            backgroundColor: "#ECECEC",
+                            border: "none",
+                            padding: "0px",
+                          }}
+                        >
+                          <img src={delet} alt="" />
+                        </Button>
                       </Col>
                     </Row>
                   );
                 })}
               </div>
+              <Delete
+                setConfirmDelete={setConfirmDelete}
+                show={show}
+                setShow={setShow}
+                handleClose={handleClose}
+                handleDelete={handleDelete}
+              />
             </Container>
           </Row>
         </Col>

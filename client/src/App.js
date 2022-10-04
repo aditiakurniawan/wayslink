@@ -8,6 +8,7 @@ import Template from "./pages/Template";
 import Result from "./pages/Result";
 import NotFound from "./pages/NotFound";
 import CreateLink from "./pages/CreateLink";
+import UpdateLink from "./pages/UpdateLink";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/datalink" element={<DataLink />} />
         <Route path="/create_link" element={<CreateLink />} />
+        <Route path="/Update_link/:id" element={<UpdateLink />} />
         <Route path="/result/:id" element={<Result />} />
       </Routes>
     </>
