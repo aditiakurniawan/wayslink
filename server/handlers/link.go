@@ -175,6 +175,7 @@ func (h *handlerLink) DeleteLink(w http.ResponseWriter, r *http.Request) {
 	response := dto.SuccessResult{Code: http.StatusOK, Data: convertResponseLink(data)}
 	json.NewEncoder(w).Encode(response)
 }
+
 func (h *handlerLink) CreateLink(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
@@ -204,6 +205,7 @@ func (h *handlerLink) CreateLink(w http.ResponseWriter, r *http.Request) {
 		LinkYt:      r.FormValue("linkYt"),
 		TitleWa:     r.FormValue("titleWa"),
 		LinkWa:      r.FormValue("linkWa"),
+		User_Id:     userId,
 	}
 
 	validation := validator.New()
@@ -231,6 +233,7 @@ func (h *handlerLink) CreateLink(w http.ResponseWriter, r *http.Request) {
 		LinkYt:      request.LinkYt,
 		TitleWa:     request.TitleWa,
 		LinkWa:      request.LinkWa,
+		UserID:      request.User_Id,
 	}
 
 	data, err := h.LinkRepository.CreateLink(link)
@@ -266,6 +269,6 @@ func convertResponseLink(u models.Link) linkdto.LinkResponse {
 		LinkYt:      u.LinkYt,
 		TitleWa:     u.TitleWa,
 		LinkWa:      u.LinkWa,
-		// Sosmed: u.Sosmed,
+		User:        u.User,
 	}
 }

@@ -20,20 +20,20 @@ func RepositoryLink(db *gorm.DB) *repository {
 
 func (r *repository) FindLinks() ([]models.Link, error) {
 	var links []models.Link
-	err := r.db.Find(&links).Error
+	err := r.db.Preload("User").Find(&links).Error
 
 	return links, err
 }
 
 func (r *repository) GetLink(ID int) (models.Link, error) {
 	var link models.Link
-	err := r.db.First(&link, ID).Error
+	err := r.db.Preload("User").First(&link, ID).Error
 
 	return link, err
 }
 
 func (r *repository) CreateLink(link models.Link) (models.Link, error) {
-	err := r.db.Create(&link).Error
+	err := r.db.Preload("User").Create(&link).Error
 
 	return link, err
 }

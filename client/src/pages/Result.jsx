@@ -25,7 +25,7 @@ function Result() {
 
   return (
     <>
-      <div>
+      <div className="py-2">
         <Container className="my-3 py-5" style={{ width: "420px" }}>
           <center>
             <img

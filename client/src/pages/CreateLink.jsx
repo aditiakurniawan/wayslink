@@ -467,7 +467,7 @@ function Link() {
                               </Col>
                             </Row>
                             <Row>
-                              <Button
+                              {/* <Button
                                 className="w-100 my-5"
                                 type="submit"
                                 style={{
@@ -476,7 +476,7 @@ function Link() {
                                 }}
                               >
                                 Add New Link
-                              </Button>
+                              </Button> */}
                             </Row>
                           </div>
                         </div>

@@ -51,7 +51,7 @@ function Login(props) {
         });
 
         if (response?.status === 200) {
-          navigate("/template");
+          navigate("/create_link");
         } else {
           navigate("/");
         }

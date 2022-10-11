@@ -17,7 +17,8 @@ type Link struct {
 	LinkYt      string `json:"linkYt"  gorm:"type: varchar(255)"`
 	TitleWa     string `json:"titleWa" gorm:"type: varchar(255)" `
 	LinkWa      string `json:"linkWa"  gorm:"type: varchar(255)"`
-	// Sosmeds     []Sosmed `json:"sosmed"`
+	User        User   `json:"user"  gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	UserID      int    `json:"user_id"`
 }
 
 type Sosmed struct {

@@ -18,6 +18,13 @@ function Profile() {
   let id = state?.user?.id;
   const [user, setUser] = useState({});
   const [message, setMessage] = useState(null);
+
+  let { data } = useQuery("usersCache", async () => {
+    const response = await API.get("/check-auth");
+    // console.log("ini response profil", response)
+    return response.data.data;
+  });
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -100,7 +107,8 @@ function Profile() {
                   <p>Name</p>
                   <Form.Group className="mb-3 border-bottom border-dark">
                     <Form.Control
-                      placeholder={state?.user?.name}
+                      placeholder={data?.name}
+                      // {state?.user?.name}
                       type="text"
                       name="name"
                       style={{ border: "0px white" }}
@@ -111,7 +119,8 @@ function Profile() {
                   <p>Email</p>
                   <Form.Group className="mb-3 border-bottom border-dark">
                     <Form.Control
-                      placeholder={state?.user?.email}
+                      placeholder={data?.email}
+                      // {state?.user?.email}
                       type="text"
                       name="email"
                       style={{ border: "0px white" }}

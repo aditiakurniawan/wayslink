@@ -28,13 +28,14 @@ function DataLink() {
   const handleShow = () => setShow(true);
 
   console.log("state", state);
-  let count = state.length;
-  let { data: links } = useQuery("linkCache", async () => {
+
+  let { data: links, refetch } = useQuery("linkCache", async () => {
     const response = await API.get("/links");
     console.log("ini response", response);
     return response.data.data;
   });
   console.log("ini", links);
+  // let count = state.length;
 
   function handleChangeLink(e) {
     if (!e.target.value) {
@@ -47,6 +48,8 @@ function DataLink() {
     setDataFilter(filter);
   }
 
+  console.log("filter", dataFilter);
+
   useEffect(() => {
     if (links) setDataFilter(links);
   }, [links]);
@@ -56,14 +59,14 @@ function DataLink() {
     handleShow();
   };
 
-  const deleteById = useMutation(async (id) => {
+  const deleteById = async (id) => {
     try {
       await API.delete(`/link/${id}`);
-      links();
+      refetch();
     } catch (error) {
       console.log(error);
     }
-  });
+  };
 
   useEffect(() => {
     if (confirmDelete) {
@@ -74,6 +77,13 @@ function DataLink() {
       setConfirmDelete(null);
     }
   }, [confirmDelete]);
+
+  let user = useQuery("usersCache", async () => {
+    const response = await API.get("/check-auth");
+    console.log("ini response user", response);
+    return response.data.data;
+  });
+  let count = dataFilter.length - 7;
 
   return (
     <>
@@ -141,63 +151,72 @@ function DataLink() {
                   height: "500px",
                 }}
               >
-                {dataFilter?.map((item, id) => {
-                  return (
-                    <Row className="mt-5 w-100 d-flex">
-                      <Col sm={1}>
-                        <img src={item?.image} alt="" className="w-100 mt-2" />
-                      </Col>
-                      <Col sm={4}>
-                        <Row>
-                          <Col>
-                            <h3>{item?.title}</h3>
-                            <a
-                              href={item?.linkWeb}
-                              style={{
-                                color: "black",
-                                textDecoration: "none",
-                              }}
-                            >
-                              <p>{item?.linkWeb}</p>
-                            </a>
-                          </Col>
-                        </Row>
-                      </Col>
+                {dataFilter
+                  ?.filter((item) => item.user_id === user.data.id)
+                  .map((item, id) => {
+                    return (
+                      <Row className="mt-5 w-100 d-flex">
+                        <Col sm={1}>
+                          <img
+                            src={item?.image}
+                            alt=""
+                            className="w-100 mt-2"
+                          />
+                        </Col>
+                        <Col sm={4}>
+                          <Row>
+                            <Col>
+                              <h3>{item?.title}</h3>
+                              <a
+                                href={item?.linkWeb}
+                                style={{
+                                  color: "black",
+                                  textDecoration: "none",
+                                }}
+                              >
+                                <p>{item?.linkWeb}</p>
+                              </a>
+                            </Col>
+                          </Row>
+                        </Col>
 
-                      <Col>
-                        <h3>10</h3>
+                        <Col sm={2} className="mx-5">
+                          {/* <h3>10</h3>
 
-                        <p>Visit</p>
-                      </Col>
+                          <p>Visit</p> */}
+                        </Col>
 
-                      <Col sm={1}>
-                        <Link to={`/result/${item.id}`}>
-                          <img src={view} alt="" />
-                        </Link>
-                      </Col>
-                      <Col sm={1}>
-                        <Link to={`/Update_link/${item.id}`}>
-                          <img src={edit} alt="" />
-                        </Link>
-                      </Col>
-                      <Col sm={1}>
-                        <Button
-                          onClick={
-                            () => handleDelete(item.id)
-                            // setShow(true)
-                          }
-                          style={{
-                            backgroundColor: "#ECECEC",
-                            border: "none",
-                            padding: "0px",
-                          }}
-                        >
-                          <img src={delet} alt="" />
-                        </Button>
-                      </Col>
-                    </Row>
-                  );
-                })}
+                        <Col sm={1}>
+                          <Link
+                            to={`/template/${item.id}`}
+                            // {`/result/${item.id}`}
+                          >
+                            <img src={view} alt="" />
+                          </Link>
+                        </Col>
+                        <Col sm={1}>
+                          <Link to={`/Update_link/${item.id}`}>
+                            <img src={edit} alt="" />
+                          </Link>
+                        </Col>
+                        <Col sm={1}>
+                          <Button
+                            onClick={
+                              () => handleDelete(item?.id)
+                              // setShow(true)
+                            }
+                            style={{
+                              backgroundColor: "#ECECEC",
+                              border: "none",
+                              padding: "0px",
+                            }}
+                          >
+                            <img src={delet} alt="" />
+                          </Button>
+                        </Col>
+                      </Row>
+                    );
+                  })}
               </div>
               <Delete
                 setConfirmDelete={setConfirmDelete}

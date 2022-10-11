@@ -48,7 +48,7 @@ function Sidebar(props) {
           </Col>
           <Col>
             <Link
-              to="/template"
+              to="/create_link"
               style={
                 props?.title === "Template"
                   ? { textDecoration: "none", color: "#ff9f00" }

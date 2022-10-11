@@ -6,7 +6,7 @@ import { API } from "../../config/api";
 import { useMutation } from "react-query";
 
 function Register(props) {
-  document.title = "register";
+  document.title = "Wayslink";
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);

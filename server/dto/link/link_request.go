@@ -17,6 +17,7 @@ type LinkRequest struct {
 	LinkYt      string `json:"linkYt" form:"linkYt" gorm:"type: varchar(255)"`
 	TitleWa     string `json:"titleWa" form:"titleWa" gorm:"type: varchar(255)" `
 	LinkWa      string `json:"linkWa" form:"linkWa" gorm:"type: varchar(255)"`
+	User_Id     int    `json:"user_id"`
 }
 
 type UpdateLinkRequest struct {
